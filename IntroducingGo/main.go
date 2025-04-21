@@ -15,6 +15,8 @@ func main(){
 }
 
 
+// Strings
+
 func stringOperations(x string){
 	fmt.Println("\nx:\t\t", x)
 	fmt.Println("len(x):\t\t", len(x))
@@ -32,6 +34,9 @@ func spliter(x string){
 	fmt.Println(splited)
 }
 
+
+// Booleans
+
 func booleans(){
 	var x bool = true
 	var y bool = false
@@ -40,4 +45,13 @@ func booleans(){
 	fmt.Println(x || y)
 	fmt.Println(x && y)
 	fmt.Println(!(x && y))
+	fmt.Println(convertBoolToInteger(!(x || y)))
 }
+
+func convertBoolToInteger(x bool) int {
+	if x {
+		return 1
+	}
+	return 0
+}
+
