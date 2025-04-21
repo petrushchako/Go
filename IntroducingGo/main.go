@@ -11,6 +11,7 @@ func main(){
 		stringOperations("Hello World")
 		nextLetter("Hello World")
 		spliter("Republic of Ireland")
+		booleans()
 }
 
 
@@ -29,4 +30,14 @@ func nextLetter(x string){
 func spliter(x string){
 	splited := strings.Split(x, "")
 	fmt.Println(splited)
+}
+
+func booleans(){
+	var x bool = true
+	var y bool = false
+	fmt.Println("\nBooleans:")
+	fmt.Println((!x))
+	fmt.Println(x || y)
+	fmt.Println(x && y)
+	fmt.Println(!(x && y))
 }
