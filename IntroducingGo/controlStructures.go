@@ -5,7 +5,8 @@ func main(){
     forLoop1()
     forLoop2()
 
-    ifSwitch()
+    ifStatement()
+    switchStatement()
 }
 
 func forLoop1 (){
@@ -24,12 +25,34 @@ func forLoop2(){
     fmt.Println()
 }
 
-func ifSwitch(){
+func ifStatement(){
     for i:=1; i <= 10; i++  {
         if i % 2 ==0{
             fmt.Println(i, " : even ")
         }else{
             fmt.Println(i, " : odd")
         }
+    }
+}
+
+func switchStatement(){
+    var input int16
+    fmt.Print("Enter number 1-5: ")
+    fmt.Scanf("%d", &input)
+    switch input{
+    case 0: 
+        fmt.Println("Zero")
+    case 1: 
+        fmt.Println("One")
+    case 2: 
+        fmt.Println("Two")
+    case 3: 
+        fmt.Println("Three")
+    case 4: 
+        fmt.Println("Four")
+    case 5: 
+        fmt.Println("Five")
+    default: 
+        fmt.Println("Wrong number")
     }
 }
