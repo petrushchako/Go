@@ -12,6 +12,7 @@ func main(){
 		nextLetter("Hello World")
 		spliter("Republic of Ireland")
 		booleans()
+		printMultiLines()
 }
 
 
@@ -55,3 +56,11 @@ func convertBoolToInteger(x bool) int {
 	return 0
 }
 
+
+
+func printMultiLines(){
+	fmt.Println(`1
+2
+3
+4`)
+}
