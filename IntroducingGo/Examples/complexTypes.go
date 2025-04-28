@@ -5,6 +5,7 @@ func main(){
 	fmt.Println("Arrays Examples:")
 	arraysExample1()
 	arraysExample2()
+	calculateSum([5]float64{12.23, 23.34, 34.45, 45.56, 56.67})
 }
 
 
@@ -21,8 +22,7 @@ func arraysExample2(){
 	arr[2] = 1
 	arr[3] = 1
 	arr[6] = 1
-	fmt.Println(arr)
-	fmt.Println(calculate10Base(arr))
+	fmt.Println(arr, "8-bit binary number is", calculate10Base(arr), "in 10 base")
 }
 
 func calculate10Base( bits [8]int) int{
@@ -34,4 +34,12 @@ func calculate10Base( bits [8]int) int{
 		result += bits[i] * (1 << (7 - i))
 	}
 	return result
+}
+
+func calculateSum(arr [5]float64){
+	var total float64
+	for i:=0; i<5; i++{
+		total += arr[i]
+	}
+	fmt.Println("Total sum of", arr, "is", total)
 }
