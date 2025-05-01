@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
 	// 1. Creating and initializing slices
@@ -87,4 +90,34 @@ func main() {
 	numCopiedSmaller := copy(smallerDestination, sourceSlice)
 	fmt.Println("Smaller destination:", smallerDestination)
 	fmt.Println("Number copied to smaller:", numCopiedSmaller)
+
+	// 6. Preallocating slices for performance
+	// Preallocating a slice can improve performance when appending many elements
+	// because it reduces the number of memory allocations and copies.
+	// This is especially important in performance-critical applications.
+	// Here we compare the performance of appending with and without preallocation.
+	fmt.Println("\n--------------------\n")
+	appendWithoutPreallocation()
+	appendWithPreallocation()
+	fmt.Println("\n--------------------\n")
+}
+
+func appendWithoutPreallocation() {
+	start := time.Now()
+	slice := make([]int, 0) // Length 0, capacity 0
+	for i := 0; i < 100000; i++ {
+		slice = append(slice, i)
+	}
+	duration := time.Since(start)
+	fmt.Println("Append without preallocation:", duration)
+}
+
+func appendWithPreallocation() {
+	start := time.Now()
+	slice := make([]int, 0, 100000) // Length 0, capacity 100000
+	for i := 0; i < 100000; i++ {
+		slice = append(slice, i)
+	}
+	duration := time.Since(start)
+	fmt.Println("Append with preallocation:", duration)
 }
