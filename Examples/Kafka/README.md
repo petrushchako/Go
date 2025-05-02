@@ -204,3 +204,19 @@ Now, let's create a Go script to consume the messages we just produced.
     ```
 
     You should see the consumer start receiving the messages that the producer sent. You can run multiple instances of the consumer to see how Kafka handles consumer groups.
+
+<br><br><br>
+
+## **Step 4: Clean up (optional)**
+When you're finished practicing, you can stop and remove the Docker containers:
+
+```bash
+docker-compose down
+```
+
+**Important Considerations:**
+* **Error Handling:** The provided scripts have basic error handling. In a production environment, you'll need more robust error handling and logging.
+* **Configuration:** You might need to adjust the Kafka broker address and topic name in the Go scripts if your Docker setup is different.
+* **Asynchronous Production:** The producer example uses a delivery report handler, which is crucial for understanding if your messages were successfully delivered. Production in real-world applications is often asynchronous.
+* **Consumer Groups:** The consumer example uses a consumer group (`my-consumer-group`). Kafka uses consumer groups to allow multiple consumers to read from a topic without duplicating messages (each message is delivered to one consumer within a group).
+* **Serialization:** For more complex data structures, you'll likely want to use a serialization format like JSON, Protocol Buffers, or Avro and serialize/deserialize your Go structs before sending/after receiving messages.
