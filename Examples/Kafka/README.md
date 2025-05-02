@@ -128,3 +128,79 @@ The easiest way to run Kafka locally for development is using Docker Compose.
     ```
 
     You should see output indicating that messages are being delivered to the `my-topic`.
+
+<br><br><br>
+
+## **Step 3: Write a Go script to consume messages from Kafka**
+Now, let's create a Go script to consume the messages we just produced.
+
+1.  **Create the consumer Go file (`consumer.go`):** In your project directory, create a file named `consumer.go` with the following code:
+
+    ```go
+    package main
+
+    import (
+        "fmt"
+        "log"
+        "os"
+        "os/signal"
+        "syscall"
+
+        "github.com/confluentinc/confluent-kafka-go/kafka"
+    )
+
+    func main() {
+        broker := "localhost:9092"
+        topic := "my-topic"
+        group := "my-consumer-group"
+
+        c, err := kafka.NewConsumer(&kafka.ConfigMap{
+            "bootstrap.servers": broker,
+            "group.id":          group,
+            "auto.offset.reset": "earliest", // Start consuming from the beginning of the topic
+        })
+
+        if err != nil {
+            log.Fatalf("Failed to create consumer: %s\n", err)
+            os.Exit(1)
+        }
+
+        defer c.Close()
+
+        err = c.SubscribeTopics([]string{topic}, nil)
+        if err != nil {
+            log.Fatalf("Failed to subscribe to topic %s: %v\n", topic, err)
+            os.Exit(1)
+        }
+
+        sigchan := make(chan os.Signal, 1)
+        signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
+
+        fmt.Println("Consumer started. Press Ctrl+C to exit.")
+
+        for {
+            select {
+            case sig := <-sigchan:
+                fmt.Printf("Caught signal %v: terminating\n", sig)
+                return
+            default:
+                msg, err := c.ReadMessage(100 * time.Millisecond) // Timeout after 100ms
+                if err == nil {
+                    fmt.Printf("Received message on %s [%d] at offset %v: %s\n",
+                        *msg.TopicPartition.Topic, msg.TopicPartition.Partition, msg.TopicPartition.Offset, string(msg.Value))
+                } else if !err.(kafka.Error).IsTimeout() {
+                    // The client will automatically try to recover from all errors.
+                    fmt.Printf("Consumer error: %v (%v)\n", err, msg)
+                }
+            }
+        }
+    }
+    ```
+
+6.  **Run the consumer script:** In your terminal, within the `kafka-go-producer` directory, run:
+
+    ```bash
+    go run consumer.go
+    ```
+
+    You should see the consumer start receiving the messages that the producer sent. You can run multiple instances of the consumer to see how Kafka handles consumer groups.
