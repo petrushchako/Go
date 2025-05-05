@@ -75,7 +75,7 @@ The easiest way to run Kafka locally for development is using Docker Compose.
         "os"
 
         "github.com/confluentinc/confluent-kafka-go/kafka"
-)
+    )
 
     func main() {
         broker := "localhost:9092"
