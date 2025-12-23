@@ -7,3 +7,14 @@
   ```
 
 > This will create a file `go.mod` in the working directory.<br>This file will contain nemo of the module and go version.
+
+2. Create Go source file for the module code:
+  ```sh
+  touch main.go
+  ```
+  And add code.
+
+3. Run application in current directory:
+  ```sh
+  go run .
+  ```
